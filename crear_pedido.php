@@ -30,8 +30,10 @@ try {
     }
 
     // Preparar la consulta SQL
+    $estado_inicial = !empty($data['repartidor_id']) ? 'asignado' : 'pendiente';
+
     $sql = "INSERT INTO pedidos (id_cliente, id_admin_creador, id_repartidor_asignado, direccion_entrega, detalles, latitud_destino, longitud_destino, estado, fecha_creacion) 
-            VALUES (:id_cliente, :id_admin_creador, :id_repartidor_asignado, :direccion_entrega, :detalles, :latitud_destino, :longitud_destino, 'pendiente', NOW())";
+            VALUES (:id_cliente, :id_admin_creador, :id_repartidor_asignado, :direccion_entrega, :detalles, :latitud_destino, :longitud_destino, :estado, NOW())";
     
     $stmt = $pdo->prepare($sql);
     
@@ -43,7 +45,8 @@ try {
         ':direccion_entrega'      => $data['direccion'],
         ':detalles'               => $data['detalles'],
         ':latitud_destino'        => $data['latitud'],
-        ':longitud_destino'       => $data['longitud']
+        ':longitud_destino'       => $data['longitud'],
+        ':estado'                 => $estado_inicial
     ]);
 
     $nuevo_id = $pdo->lastInsertId();

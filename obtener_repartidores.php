@@ -15,7 +15,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Solo traemos a los usuarios que tengan el rol de repartidor
-    $stmt = $pdo->query("SELECT id_usuario, nombre FROM usuarios WHERE rol = 'repartidor' ORDER BY nombre ASC");
+    $stmt = $pdo->query("SELECT id_usuario, nombre, telefono, correo FROM usuarios WHERE rol = 'repartidor' ORDER BY nombre ASC");
     $repartidores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([

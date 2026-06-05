@@ -24,7 +24,7 @@
             <p class="text-gray-500 font-medium mt-2 text-sm">Logística y entrega de insumos agrícolas.</p>
         </div>
 
-        <form id="loginForm" class="space-y-5 relative z-10">
+        <form id="loginForm" class="space-y-5 relative z-10" onsubmit="iniciarSesion(event)">
             
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2 ml-1">Correo Electrónico</label>
@@ -32,7 +32,7 @@
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <i class="fa-solid fa-envelope text-gray-400"></i>
                     </div>
-                    <input type="email" required placeholder="user@passa.com.mx" 
+                    <input type="email" id="correo" required placeholder="user@passa.com.mx" 
                            class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-800 focus:outline-none focus:border-[#6b9e1a] focus:ring-2 focus:ring-[#6b9e1a]/20 transition-all">
                 </div>
             </div>
@@ -43,7 +43,7 @@
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <i class="fa-solid fa-lock text-gray-400"></i>
                     </div>
-                    <input type="password" required placeholder="••••••••" 
+                    <input type="password" id="password" required placeholder="••••••••" 
                            class="w-full pl-11 pr-12 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-800 focus:outline-none focus:border-[#6b9e1a] focus:ring-2 focus:ring-[#6b9e1a]/20 transition-all">
                     
                     <button type="button" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-[#001b71] transition-colors">
@@ -56,17 +56,17 @@
                 <a href="#" class="text-sm font-bold text-[#6b9e1a] hover:text-[#001b71] transition-colors">¿Olvidaste tu contraseña?</a>
             </div>
 
-            <button type="button" id="btnSubmit" onclick="modoRepartidor()"
+            <!-- Mensaje de Error en Pantalla -->
+            <div id="error-container" class="hidden bg-red-50 border border-red-100 text-red-600 text-sm font-semibold px-4 py-3 rounded-xl flex items-start gap-2 animate-[fadeIn_0.3s_ease-in-out]">
+                <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+                <span id="error-message"></span>
+            </div>
+
+            <button type="submit" id="btnSubmit"
                     class="w-full text-white bg-[#001b71] hover:bg-[#001250] font-bold py-4 px-6 rounded-2xl shadow-lg shadow-[#001b71]/30 transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mt-4">
                 <span id="btnText">Iniciar Sesión</span>
                 <i id="btnIcon" class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
                 <i id="btnSpinner" class="fa-solid fa-circle-notch fa-spin ml-2 hidden"></i>
-            </button>
-            <button type="button" onclick="modoAdmin()"
-                    class="w-full text-white bg-[#001b71] hover:bg-[#001250] font-bold py-4 px-6 rounded-2xl shadow-lg shadow-[#001b71]/30 transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mt-4">
-                <span id="btnText">Admin</span>
-                <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
-                <i class="fa-solid fa-circle-notch fa-spin ml-2 hidden"></i>
             </button>
         </form>
 
@@ -77,35 +77,66 @@
     </div>
 
     <script>
-        function modoAdmin() {
-            window.location.href = 'admin_dashboard.html';
-        }
-
-        function modoRepartidor() {
-            window.location.href = 'lista_pedidos.html';
-        }
-        
-        //Animaciones y funcionamiento para el botón de inicio de sesión
-        /*document.getElementById('loginForm').addEventListener('submit', function(event) {
+        async function iniciarSesion(event) {
             event.preventDefault();
 
             const btn = document.getElementById('btnSubmit');
             const btnText = document.getElementById('btnText');
             const btnIcon = document.getElementById('btnIcon');
             const btnSpinner = document.getElementById('btnSpinner');
+            const errorContainer = document.getElementById('error-container');
+            const errorMessage = document.getElementById('error-message');
             
 
-            // Estado de carga (Se pone Verde Hoja al cargar)
+            // Activar estado de carga visual
             btn.classList.add('bg-[#6b9e1a]', 'cursor-not-allowed', 'shadow-none');
             btn.classList.remove('bg-[#001b71]', 'hover:bg-[#001250]', 'shadow-[#001b71]/30');
-            btnText.innerText = 'Verificando datos...';
+            btnText.innerText = 'Verificando...';
             btnIcon.classList.add('hidden');
             btnSpinner.classList.remove('hidden');
+            btn.disabled = true;
 
-            setTimeout(() => {
-                window.location.href = 'lista_pedidos.html';
-            }, 1500);
-        });*/
+            // Ocultar errores previos
+            errorContainer.classList.add('hidden');
+
+            const correo = document.getElementById('correo').value;
+            const password = document.getElementById('password').value; // Temporalmente ignorado por BD
+
+            try {
+                const respuesta = await fetch('login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ correo, password })
+                });
+                const data = await respuesta.json();
+
+                if (data.success) {
+                    // Almacenamos al usuario en la sesión del navegador
+                    localStorage.setItem('usuarioPassa', JSON.stringify(data.usuario));
+                    
+                    // Redirección inteligente basada en rol
+                    if (data.usuario.rol === 'admin') {
+                        window.location.href = 'admin_dashboard.html';
+                    } else {
+                        window.location.href = 'lista_pedidos.html';
+                    }
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+            // Mostrar el mensaje de error integrado en el diseño
+            errorMessage.innerText = error.message || 'Error de conexión con el servidor.';
+            errorContainer.classList.remove('hidden');
+
+                // Restaurar botón si hay error
+                btn.classList.remove('bg-[#6b9e1a]', 'cursor-not-allowed', 'shadow-none');
+                btn.classList.add('bg-[#001b71]', 'hover:bg-[#001250]', 'shadow-[#001b71]/30');
+                btnText.innerText = 'Iniciar Sesión';
+                btnIcon.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                btn.disabled = false;
+            }
+        }
     </script>
 </body>
 </html>

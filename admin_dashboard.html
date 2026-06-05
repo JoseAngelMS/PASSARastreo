@@ -162,23 +162,8 @@
                                     <th class="px-6 py-4 text-center">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 font-bold text-gray-800">#1024</td>
-                                    <td class="px-6 py-4 font-semibold">Ana Lizárraga</td>
-                                    <td class="px-6 py-4 text-xs">Av. Sábalo Cerritos</td>
-                                    <td class="px-6 py-4">Jose Angel</td>
-                                    <td class="px-6 py-4"><span class="bg-[#ffcc00]/20 text-[#997a00] font-bold px-3 py-1 rounded-full text-[10px] uppercase">En camino</span></td>
-                                    <td class="px-6 py-4 text-center"><button class="text-[#001b71] hover:underline font-bold"><i class="fa-solid fa-eye"></i></button></td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 font-bold text-gray-800">#1025</td>
-                                    <td class="px-6 py-4 font-semibold">Roberto Gómez</td>
-                                    <td class="px-6 py-4 text-xs">Juan Carrasco 89</td>
-                                    <td class="px-6 py-4">Sin asignar</td>
-                                    <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 font-bold px-3 py-1 rounded-full text-[10px] uppercase">Pendiente</span></td>
-                                    <td class="px-6 py-4 text-center"><button class="text-[#001b71] hover:underline font-bold"><i class="fa-solid fa-eye"></i></button></td>
-                                </tr>
+                            <tbody id="tabla-pedidos-body" class="divide-y divide-gray-100">
+                                <!-- Los pedidos se cargarán aquí dinámicamente -->
                             </tbody>
                         </table>
                     </div>
@@ -194,21 +179,8 @@
                         <button onclick="abrirModalNuevoRepartidor()" class="bg-[#001b71] text-white px-4 py-2 rounded-xl font-bold text-sm shadow-md hover:bg-[#001250] transition-all active:scale-95"><i class="fa-solid fa-user-plus mr-2"></i> Agregar Repartidor</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center relative overflow-hidden">
-                            <div class="absolute top-4 right-4 w-3 h-3 bg-[#6b9e1a] rounded-full shadow-[0_0_8px_rgba(107,158,26,0.6)]"></div>
-                            <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-3 border-4 border-white shadow-sm overflow-hidden"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Josea" class="w-full"></div>
-                            <h3 class="text-lg font-bold text-gray-800">Jose Angel</h3>
-                            <p class="text-xs text-gray-500 mb-4"><i class="fa-solid fa-phone mr-1"></i> 669 123 4567</p>
-                            <div class="bg-blue-50 text-[#001b71] py-2 px-4 rounded-xl text-xs font-bold"><i class="fa-solid fa-motorcycle mr-2"></i> Honda Cargo (VFG-912)</div>
-                        </div>
-                        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center relative overflow-hidden">
-                            <div class="absolute top-4 right-4 w-3 h-3 bg-red-500 rounded-full"></div>
-                            <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-3 border-4 border-white shadow-sm overflow-hidden"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos" class="w-full"></div>
-                            <h3 class="text-lg font-bold text-gray-800">Carlos M.</h3>
-                            <p class="text-xs text-gray-500 mb-4"><i class="fa-solid fa-phone mr-1"></i> 669 987 6543</p>
-                            <div class="bg-blue-50 text-[#001b71] py-2 px-4 rounded-xl text-xs font-bold"><i class="fa-solid fa-motorcycle mr-2"></i> Italika FT150 (XYZ-123)</div>
-                        </div>
+                    <div id="grid-repartidores" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Los repartidores se cargarán aquí dinámicamente -->
                     </div>
                 </div>
 
@@ -232,19 +204,8 @@
                                     <th class="px-6 py-4">Dirección Principal</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 font-bold text-gray-800">Ana Lizárraga</td>
-                                    <td class="px-6 py-4 text-xs"><i class="fa-solid fa-phone text-gray-400 mr-1"></i> 669 111 2233</td>
-                                    <td class="px-6 py-4">ana.liz@email.com</td>
-                                    <td class="px-6 py-4 text-xs">Av. Sábalo Cerritos, Mzt</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 font-bold text-gray-800">Roberto Gómez</td>
-                                    <td class="px-6 py-4 text-xs"><i class="fa-solid fa-phone text-gray-400 mr-1"></i> 669 444 5566</td>
-                                    <td class="px-6 py-4">roberto.g@email.com</td>
-                                    <td class="px-6 py-4 text-xs">Juan Carrasco 89, Centro</td>
-                                </tr>
+                            <tbody id="tabla-clientes-body" class="divide-y divide-gray-100">
+                                <!-- Los clientes se cargarán aquí dinámicamente -->
                             </tbody>
                         </table>
                     </div>
@@ -459,6 +420,9 @@
         </div>
     </div>
 
+    <!-- Contenedor de Notificaciones (Toasts) -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Inicializar Mapa
@@ -476,6 +440,33 @@
         let markerModal;
 
         // ==========================================
+        // SISTEMA DE NOTIFICACIONES (TOASTS)
+        // ==========================================
+        function mostrarNotificacion(mensaje, tipo = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColor = tipo === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800';
+            const icon = tipo === 'success' ? '<i class="fa-solid fa-circle-check text-green-500 text-lg"></i>' : '<i class="fa-solid fa-circle-exclamation text-red-500 text-lg"></i>';
+            
+            toast.className = `flex items-center gap-3 px-5 py-4 rounded-2xl border shadow-xl ${bgColor} transform transition-all duration-300 translate-y-10 opacity-0 pointer-events-auto`;
+            toast.innerHTML = `${icon} <span class="font-bold text-sm">${mensaje}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Animar entrada
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 10);
+            
+            // Remover después de 4 segundos
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ==========================================
         // CARGAR DATOS PARA FORMULARIOS
         // ==========================================
         async function cargarClientes() {
@@ -483,12 +474,35 @@
                 const response = await fetch('obtener_clientes.php');
                 const data = await response.json();
                 if (data.success) {
+                    // Llenar selector en Modal Nuevo Pedido
                     const select = document.getElementById('cliente_id');
-                    select.innerHTML = '<option value="" disabled selected>Seleccionar cliente...</option>';
-                    data.clientes.forEach(cliente => {
-                        select.innerHTML += `<option value="${cliente.id_cliente}">${cliente.nombre}</option>`;
-                    });
-                    select.innerHTML += '<option value="nuevo" class="font-bold text-[#001b71] bg-gray-50">+ Agregar nuevo cliente</option>';
+                    if(select) {
+                        select.innerHTML = '<option value="" disabled selected>Seleccionar cliente...</option>';
+                        data.clientes.forEach(cliente => {
+                            select.innerHTML += `<option value="${cliente.id_cliente}">${cliente.nombre}</option>`;
+                        });
+                        select.innerHTML += '<option value="nuevo" class="font-bold text-[#001b71] bg-gray-50">+ Agregar nuevo cliente</option>';
+                    }
+
+                    // Llenar tabla en Vista Clientes
+                    const tbody = document.getElementById('tabla-clientes-body');
+                    if(tbody) {
+                        tbody.innerHTML = '';
+                        data.clientes.forEach(cliente => {
+                            const tel = cliente.telefono ? `<i class="fa-solid fa-phone text-gray-400 mr-1"></i> ${cliente.telefono}` : '<span class="text-gray-400 italic">No registrado</span>';
+                            const email = cliente.email || '<span class="text-gray-400 italic">No registrado</span>';
+                            const dir = cliente.direccion_principal || '<span class="text-gray-400 italic">No registrada</span>';
+                            
+                            tbody.innerHTML += `
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-bold text-gray-800">${cliente.nombre}</td>
+                                    <td class="px-6 py-4 text-xs">${tel}</td>
+                                    <td class="px-6 py-4 text-sm">${email}</td>
+                                    <td class="px-6 py-4 text-xs truncate max-w-xs" title="${dir}">${dir}</td>
+                                </tr>
+                            `;
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("Error al cargar clientes:", error);
@@ -500,21 +514,84 @@
                 const response = await fetch('obtener_repartidores.php');
                 const data = await response.json();
                 if (data.success) {
+                    // Llenar selector en Modal Nuevo Pedido
                     const select = document.getElementById('repartidor_id');
-                    select.innerHTML = '<option value="" selected>Seleccionar repartidor...</option>';
-                    data.repartidores.forEach(rep => {
-                        select.innerHTML += `<option value="${rep.id_usuario}">${rep.nombre}</option>`;
-                    });
-                    select.innerHTML += '<option value="nuevo" class="font-bold text-[#001b71] bg-gray-50">+ Agregar nuevo repartidor</option>';
+                    if(select) {
+                        select.innerHTML = '<option value="" selected>Seleccionar repartidor...</option>';
+                        data.repartidores.forEach(rep => {
+                            select.innerHTML += `<option value="${rep.id_usuario}">${rep.nombre}</option>`;
+                        });
+                        select.innerHTML += '<option value="nuevo" class="font-bold text-[#001b71] bg-gray-50">+ Agregar nuevo repartidor</option>';
+                    }
+
+                    // Llenar grid en Vista Repartidores
+                    const grid = document.getElementById('grid-repartidores');
+                    if(grid) {
+                        grid.innerHTML = '';
+                        data.repartidores.forEach(rep => {
+                            const tel = rep.telefono ? `<i class="fa-solid fa-phone mr-1"></i> ${rep.telefono}` : '<span class="italic text-gray-400">Sin teléfono</span>';
+                            const correo = rep.correo || 'Sin correo registrado';
+                            const seed = encodeURIComponent(rep.nombre.replace(/\s+/g, '')); // Semilla para un avatar único
+                            
+                            grid.innerHTML += `
+                                <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm text-center relative overflow-hidden transition hover:shadow-md">
+                                    <div class="absolute top-4 right-4 w-3 h-3 bg-[#6b9e1a] rounded-full shadow-[0_0_8px_rgba(107,158,26,0.6)] animate-pulse"></div>
+                                    <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-3 border-4 border-white shadow-sm overflow-hidden"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}" class="w-full" alt="Avatar"></div>
+                                    <h3 class="text-lg font-bold text-gray-800">${rep.nombre}</h3>
+                                    <p class="text-xs text-gray-500 mb-4">${tel}</p>
+                                    <div class="bg-blue-50 text-[#001b71] py-2 px-4 rounded-xl text-xs font-bold truncate" title="${correo}"><i class="fa-solid fa-envelope mr-2"></i> ${correo}</div>
+                                </div>
+                            `;
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("Error al cargar repartidores:", error);
             }
         }
 
+        async function cargarPedidos() {
+            try {
+                const response = await fetch('obtener_pedidos.php');
+                const data = await response.json();
+                if (data.success) {
+                    const tbody = document.getElementById('tabla-pedidos-body');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.pedidos.forEach(pedido => {
+                            const rep = pedido.repartidor || '<span class="italic text-gray-400">Sin asignar</span>';
+                            
+                            // Determinar estilos según el estado
+                            let estadoClase = 'bg-gray-100 text-gray-600'; // pendiente
+                            let estadoTexto = pedido.estado.replace('_', ' ');
+                            
+                            if (pedido.estado === 'en_camino') estadoClase = 'bg-[#ffcc00]/20 text-[#997a00]';
+                            else if (pedido.estado === 'asignado') estadoClase = 'bg-blue-100 text-blue-700';
+                            else if (pedido.estado === 'entregado') estadoClase = 'bg-green-100 text-green-700';
+                            else if (pedido.estado === 'fallido') estadoClase = 'bg-red-100 text-red-700';
+                            
+                            tbody.innerHTML += `
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 font-bold text-gray-800">#${pedido.id_pedido}</td>
+                                    <td class="px-6 py-4 font-semibold">${pedido.cliente}</td>
+                                    <td class="px-6 py-4 text-xs truncate max-w-[200px]" title="${pedido.direccion_entrega}">${pedido.direccion_entrega}</td>
+                                    <td class="px-6 py-4 text-sm">${rep}</td>
+                                    <td class="px-6 py-4"><span class="${estadoClase} font-bold px-3 py-1 rounded-full text-[10px] uppercase">${estadoTexto}</span></td>
+                                    <td class="px-6 py-4 text-center"><button class="text-[#001b71] hover:underline font-bold transition-all active:scale-90"><i class="fa-solid fa-eye"></i></button></td>
+                                </tr>
+                            `;
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Error al cargar pedidos:", error);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             cargarClientes();
             cargarRepartidores();
+            cargarPedidos();
         });
 
         // ==========================================
@@ -575,12 +652,12 @@
                     const selectRepartidor = document.getElementById('repartidor_id');
                     if(selectRepartidor) selectRepartidor.value = resultado.id;
                     
-                    alert('¡Repartidor registrado exitosamente!');
+                    mostrarNotificacion('¡Repartidor registrado exitosamente!', 'success');
                 } else {
-                    alert('Error: ' + resultado.error);
+                    mostrarNotificacion('Error: ' + resultado.error, 'error');
                 }
             } catch (error) {
-                alert('Hubo un problema de conexión con el servidor.');
+                mostrarNotificacion('Hubo un problema de conexión con el servidor.', 'error');
             } finally {
                 btnSubmit.innerHTML = originalText;
                 btnSubmit.disabled = false;
@@ -642,12 +719,12 @@
                     const selectCliente = document.getElementById('cliente_id');
                     if(selectCliente) selectCliente.value = resultado.id;
                     
-                    alert('¡Cliente registrado exitosamente!');
+                    mostrarNotificacion('¡Cliente registrado exitosamente!', 'success');
                 } else {
-                    alert('Error: ' + resultado.error);
+                    mostrarNotificacion('Error: ' + resultado.error, 'error');
                 }
             } catch (error) {
-                alert('Hubo un problema de conexión con el servidor.');
+                mostrarNotificacion('Hubo un problema de conexión con el servidor.', 'error');
             } finally {
                 btnSubmit.innerHTML = originalText;
                 btnSubmit.disabled = false;
@@ -804,14 +881,14 @@
                 if(resultado.success) {
                     cerrarModalNuevoPedido();
                     document.getElementById('form-nuevo-pedido').reset();
-                    alert('¡Pedido generado exitosamente! ID: #' + resultado.id);
-                    // TODO: Aquí podrías llamar una función que recargue la tabla de pedidos
+                    mostrarNotificacion('¡Pedido generado exitosamente! ID: #' + resultado.id, 'success');
+                    await cargarPedidos(); // Refrescar la tabla con el nuevo pedido
                 } else {
-                    alert('Error al generar el pedido: ' + resultado.error);
+                    mostrarNotificacion('Error al generar el pedido: ' + resultado.error, 'error');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Hubo un problema de conexión con el servidor.' + error);
+                mostrarNotificacion('Hubo un problema de conexión con el servidor.', 'error');
             } finally {
                 btnSubmit.innerHTML = originalText;
                 btnSubmit.disabled = false;

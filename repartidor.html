@@ -30,8 +30,8 @@
             <a href="lista_pedidos.html" class="bg-white/90 backdrop-blur-md w-12 h-12 flex justify-center items-center rounded-full shadow-md text-gray-800 pointer-events-auto hover:bg-gray-100 active:scale-90 transition-all duration-200">
                 <i class="fa-solid fa-chevron-left text-xl pr-1"></i>
             </a>
-            <div class="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-md font-bold text-gray-800 pointer-events-auto">
-                <i class="fa-solid fa-motorcycle text-blue-600 mr-2"></i> En Ruta
+            <div id="badge-ruta" class="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-md font-bold text-gray-800 pointer-events-auto text-sm transition-colors">
+                <i class="fa-solid fa-spinner fa-spin text-gray-500 mr-2"></i> Cargando...
             </div>
             <button class="bg-white/90 backdrop-blur-md w-12 h-12 flex justify-center items-center rounded-full shadow-md text-gray-700 pointer-events-auto hover:bg-gray-100 active:scale-90 transition-all duration-200">
                 <i class="fa-solid fa-headset text-xl"></i>
@@ -43,11 +43,11 @@
         <div class="flotante w-full mt-auto bg-white rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-6 pb-6">
             <div class="flex justify-between items-center mb-6">
                 <div>
-                    <p class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Entrega #1024</p>
-                    <h2 class="text-2xl font-bold text-gray-800">Ana Lizárraga</h2>
-                    <p class="text-gray-500 text-sm mt-1">
+                    <p id="txt-pedido-id" class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Entrega #---</p>
+                    <h2 id="txt-cliente" class="text-2xl font-bold text-gray-800">Cargando...</h2>
+                    <p id="txt-direccion" class="text-gray-500 text-sm mt-1">
                         <i class="fa-solid fa-location-dot text-gray-400 mr-1"></i> 
-                        Av. Sábalo Cerritos, Mazatlán
+                        Obteniendo información...
                     </p>
                 </div>
                 <button class="bg-green-100 text-green-600 h-12 w-12 rounded-full flex justify-center items-center shadow-sm hover:bg-green-200 transition">
@@ -56,9 +56,9 @@
             </div>
 
             <button 
-                onclick="abrirEvidencia()"
-                class="w-full text-white bg-blue-600 hover:bg-blue-700 font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/30 transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mb-2">
-                <i class="fa-solid fa-location-crosshairs text-xl mr-2"></i> Validar Ubicación
+                id="btn-principal"
+                class="w-full text-white bg-gray-400 font-bold py-4 px-6 rounded-2xl shadow-md transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mb-2" disabled>
+                <i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Cargando...
             </button>
         </div>
 
@@ -84,16 +84,21 @@
                 
                 <label class="border-2 border-dashed border-gray-300 rounded-2xl h-32 flex flex-col justify-center items-center text-gray-500 mb-5 cursor-pointer hover:bg-gray-50 transition bg-gray-50/50">
                     <i class="fa-solid fa-camera text-3xl mb-2 text-blue-500"></i>
-                    <span class="text-sm font-bold">Tocar para tomar foto</span>
-                    <input type="file" accept="image/*" capture="environment" class="hidden">
+                    <span id="texto-foto" class="text-sm font-bold text-center px-4">Tocar para tomar foto</span>
+                    <input type="file" id="foto-evidencia" accept="image/*" capture="environment" class="hidden" onchange="previsualizarFoto(this)">
                 </label>
 
                 <p class="text-sm text-gray-500 font-semibold mb-2">2. Notas adicionales (Opcional)</p>
-                <textarea rows="2" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition mb-6" placeholder="Ej. Se dejó en recepción con el guardia de turno..."></textarea>
+                <textarea id="notas-entrega" rows="2" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition mb-6" placeholder="Ej. Se dejó en recepción con el guardia de turno..."></textarea>
 
-                <button onclick="finalizarEntrega()" class="w-full text-white bg-green-600 hover:bg-green-700 font-bold py-4 px-6 rounded-2xl shadow-lg shadow-green-600/30 transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mb-2">
-                    <i class="fa-solid fa-paper-plane mr-2"></i> Enviar y Finalizar
-                </button>
+                <div class="flex gap-3">
+                    <button id="btn-fallido" onclick="finalizarEntrega('fallido')" class="flex-1 text-white bg-red-500 hover:bg-red-600 font-bold py-4 px-4 rounded-2xl shadow-lg shadow-red-500/30 transition-all duration-300 flex justify-center items-center active:scale-[0.98] mb-2 text-sm">
+                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> Fallido
+                    </button>
+                    <button id="btn-entregado" onclick="finalizarEntrega('entregado')" class="flex-[2] text-white bg-green-600 hover:bg-green-700 font-bold py-4 px-4 rounded-2xl shadow-lg shadow-green-600/30 transition-all duration-300 flex justify-center items-center active:scale-[0.98] mb-2 text-lg">
+                        <i class="fa-solid fa-check mr-2"></i> Entregado
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -101,6 +106,9 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        let pedidoActual = null;
+        let markerDestino = null;
+
         // 1. Inicializar el mapa
         const mapa = L.map('mapa', { zoomControl: false }).setView([23.2844, -106.4633], 15);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(mapa);
@@ -112,7 +120,100 @@
             iconSize: [40, 40],
             iconAnchor: [20, 20]
         });
-        L.marker([23.2844, -106.4633], {icon: customIcon}).addTo(mapa);
+
+        // ==========================================
+        // CARGA DINÁMICA DE LA RUTA
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const idPedido = params.get('id_pedido');
+            
+            if (!idPedido) {
+                window.location.href = 'lista_pedidos.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`obtener_pedido.php?id=${idPedido}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    pedidoActual = data.pedido;
+                    actualizarVista();
+                    
+                    // Centrar el mapa en la dirección real del cliente
+                    const lat = parseFloat(pedidoActual.latitud_destino);
+                    const lng = parseFloat(pedidoActual.longitud_destino);
+                    mapa.setView([lat, lng], 15);
+                    
+                    if (markerDestino) mapa.removeLayer(markerDestino);
+                    markerDestino = L.marker([lat, lng], {icon: customIcon}).addTo(mapa);
+                } else {
+                    alert('No se pudo cargar el pedido.');
+                    window.location.href = 'lista_pedidos.html';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        function actualizarVista() {
+            document.getElementById('txt-pedido-id').innerText = `Entrega #${pedidoActual.id_pedido}`;
+            document.getElementById('txt-cliente').innerText = pedidoActual.cliente;
+            document.getElementById('txt-direccion').innerHTML = `<i class="fa-solid fa-location-dot text-gray-400 mr-1"></i> ${pedidoActual.direccion_entrega}`;
+
+            const btnPrincipal = document.getElementById('btn-principal');
+            const badgeRuta = document.getElementById('badge-ruta');
+
+            btnPrincipal.disabled = false;
+
+            if (pedidoActual.estado === 'pendiente' || pedidoActual.estado === 'asignado') {
+                // Estado: Aún no iniciado
+                badgeRuta.innerHTML = '<i class="fa-solid fa-clock text-gray-500 mr-2"></i> Asignado';
+                badgeRuta.className = 'bg-gray-100 text-gray-700 px-4 py-2 rounded-full shadow-md font-bold pointer-events-auto text-sm transition-colors';
+                
+                btnPrincipal.innerHTML = '<i class="fa-solid fa-play text-xl mr-2"></i> Iniciar Ruta';
+                btnPrincipal.className = 'w-full text-white bg-[#001b71] hover:bg-[#001250] font-bold py-4 px-6 rounded-2xl shadow-lg shadow-[#001b71]/30 transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mb-2';
+                btnPrincipal.onclick = cambiarEstadoEnCamino;
+            } else if (pedidoActual.estado === 'en_camino') {
+                // Estado: Ya en movimiento
+                badgeRuta.innerHTML = '<i class="fa-solid fa-motorcycle text-blue-600 mr-2"></i> En Ruta';
+                badgeRuta.className = 'bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-md font-bold text-gray-800 pointer-events-auto text-sm transition-colors';
+                
+                btnPrincipal.innerHTML = '<i class="fa-solid fa-location-crosshairs text-xl mr-2"></i> Validar Ubicación';
+                btnPrincipal.className = 'w-full text-white bg-blue-600 hover:bg-blue-700 font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/30 transition-all duration-300 flex justify-center items-center text-lg active:scale-[0.98] mb-2';
+                btnPrincipal.onclick = abrirEvidencia;
+            }
+        }
+
+        async function cambiarEstadoEnCamino() {
+            const btn = document.getElementById('btn-principal');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Iniciando...';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('id_pedido', pedidoActual.id_pedido);
+            formData.append('estado', 'en_camino');
+
+            try {
+                const response = await fetch('actualizar_estado_pedido.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    pedidoActual.estado = 'en_camino';
+                    actualizarVista(); // Esto cambiará automáticamente el botón a "Validar Ubicación"
+                } else {
+                    alert('Error al iniciar ruta.');
+                    actualizarVista();
+                }
+            } catch (error) {
+                alert('Error de conexión.');
+                actualizarVista();
+            }
+        }
 
         // 2. Funciones para la Ventana Flotante de Evidencia
         const modalEvidencia = document.getElementById('modal-evidencia');
@@ -126,16 +227,129 @@
         }
 
         function cerrarEvidencia() {
-            // Volvemos a ocultar el modal
             modalEvidencia.classList.add('hidden');
             modalEvidencia.classList.remove('flex');
         }
 
-        function finalizarEntrega() {
-            // Aquí iría el código real para enviar la foto, la nota y el GPS a tu PHP
-            alert("¡Evidencia enviada! Regresando a la lista de pedidos...");
-            // Redirigir a la lista
-            window.location.href = 'lista_pedidos.html';
+        let fotoComprimidaBlob = null;
+
+        function previsualizarFoto(input) {
+            const label = input.parentElement;
+            const textoFoto = document.getElementById('texto-foto');
+            const iconCamera = label.querySelector('.fa-camera');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        // Redimensionar la imagen para evitar el límite de peso de PHP (upload_max_filesize)
+                        const canvas = document.createElement('canvas');
+                        const MAX_SIZE = 800; // Resolución máxima suficiente para una evidencia
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+                        } else {
+                            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Mostrar miniatura de la foto real como fondo
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                        label.style.backgroundImage = `url(${dataUrl})`;
+                        label.style.backgroundSize = 'cover';
+                        label.style.backgroundPosition = 'center';
+                        label.classList.remove('border-dashed', 'border-gray-300', 'bg-gray-50/50');
+                        label.classList.add('border-green-500', 'border-solid');
+                        
+                        if (iconCamera) iconCamera.classList.add('hidden');
+                        textoFoto.innerHTML = `<span class="bg-black/60 text-white px-3 py-1.5 rounded-full text-xs backdrop-blur-sm font-semibold shadow-sm"><i class="fa-solid fa-check mr-1 text-green-400"></i> Evidencia Lista</span>`;
+
+                        // Guardar la foto ya comprimida en la variable global para enviarla
+                        canvas.toBlob((blob) => {
+                            fotoComprimidaBlob = blob;
+                        }, 'image/jpeg', 0.8);
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function finalizarEntrega(estadoFinal) {
+            const btnEntregado = document.getElementById('btn-entregado');
+            const btnFallido = document.getElementById('btn-fallido');
+            const notas = document.getElementById('notas-entrega').value;
+
+            // Validar que exista una foto obligatoria si el estado es Entregado
+            if (estadoFinal === 'entregado' && !fotoComprimidaBlob) {
+                alert('Por favor, toma una fotografía como evidencia de la entrega.');
+                return;
+            }
+
+            // Si la entrega es fallida, obligamos al repartidor a dejar una nota
+            if (estadoFinal === 'fallido' && notas.trim() === '') {
+                alert('Por favor, agrega una nota explicando por qué no se pudo entregar.');
+                document.getElementById('notas-entrega').focus();
+                return;
+            }
+            
+            const botonActivo = estadoFinal === 'entregado' ? btnEntregado : btnFallido;
+            const originalHTML = botonActivo.innerHTML;
+            
+            btnEntregado.disabled = true;
+            btnFallido.disabled = true;
+            botonActivo.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Procesando...';
+
+            // Usamos FormData en lugar de JSON para poder enviar archivos multimedia
+            const formData = new FormData();
+            formData.append('id_pedido', pedidoActual.id_pedido);
+            formData.append('estado', estadoFinal);
+            formData.append('motivo_excepcion', notas);
+            
+            // Datos extra para la tabla entregas_confirmadas
+            const usuarioActual = JSON.parse(localStorage.getItem('usuarioPassa'));
+            formData.append('id_repartidor', usuarioActual.id_usuario);
+            formData.append('latitud_real', pedidoActual.latitud_destino); // Temporal hasta usar GPS
+            formData.append('longitud_real', pedidoActual.longitud_destino); // Temporal hasta usar GPS
+
+            // Si hay foto (siempre habrá en Entregado), la adjuntamos
+            if (fotoComprimidaBlob) {
+                formData.append('foto', fotoComprimidaBlob, 'evidencia.jpg');
+            }
+
+            try {
+                const response = await fetch('actualizar_estado_pedido.php', {
+                    method: 'POST',
+                    body: formData // No declaramos Content-Type, Fetch lo hace automático para FormData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    botonActivo.innerHTML = '<i class="fa-solid fa-circle-check text-xl mr-2"></i> ¡Registrado!';
+                    
+                    setTimeout(() => { window.location.href = 'lista_pedidos.html'; }, 1500);
+                } else {
+                    alert('Error: ' + data.error);
+                    botonActivo.innerHTML = originalHTML;
+                    btnEntregado.disabled = false;
+                    btnFallido.disabled = false;
+                }
+            } catch (error) {
+                alert('Hubo un problema de conexión.');
+                botonActivo.innerHTML = originalHTML;
+                btnEntregado.disabled = false;
+                btnFallido.disabled = false;
+            }
         }
     </script>
 </body>

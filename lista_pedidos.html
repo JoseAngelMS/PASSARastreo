@@ -16,19 +16,19 @@
             <div class="flex justify-between items-center mb-5">
                 <div>
                     <p class="text-sm text-gray-400 font-semibold mb-1 uppercase tracking-wider">Viernes, 20 de Febrero</p>
-                    <h1 class="text-3xl font-bold text-[#001b71] tracking-tight">Hola, Jose 👋</h1>
+                    <h1 id="saludo-repartidor" class="text-3xl font-bold text-[#001b71] tracking-tight">Cargando... 👋</h1>
                 </div>
                 <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center border-[3px] border-[#6b9e1a]/30 shadow-sm overflow-hidden">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jose&backgroundColor=e2e8f0" alt="Perfil" class="w-full h-full object-cover">
+                    <img id="avatar-repartidor" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Usuario&backgroundColor=e2e8f0" alt="Perfil" class="w-full h-full object-cover">
                 </div>
             </div>
             
             <div class="flex gap-3 mt-2">
                 <div class="bg-[#001b71]/5 text-[#001b71] px-4 py-3 rounded-2xl text-sm font-bold flex-1 text-center border border-[#001b71]/10 shadow-inner">
-                    <span class="block text-2xl mb-0.5">2</span> Pendientes
+                    <span id="contador-pendientes" class="block text-2xl mb-0.5">-</span> Pendientes
                 </div>
                 <div class="bg-[#6b9e1a]/5 text-[#6b9e1a] px-4 py-3 rounded-2xl text-sm font-bold flex-1 text-center border border-[#6b9e1a]/20 shadow-inner">
-                    <span class="block text-2xl mb-0.5">2</span> Entregados
+                    <span id="contador-entregados" class="block text-2xl mb-0.5">-</span> Entregados
                 </div>
             </div>
         </div>
@@ -45,73 +45,11 @@
         <div class="px-5 py-2 flex-1 overflow-y-auto">
             
             <div id="lista-activas" class="space-y-4 mb-8 block animate-[fadeIn_0.3s_ease-in-out]">
-                
-                <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1.5 h-full bg-[#ffcc00]"></div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-gray-400">#1024</span>
-                        <span class="bg-[#ffcc00]/20 text-[#997a00] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-                            <i class="fa-solid fa-motorcycle text-[10px] fa-fade"></i> En camino
-                        </span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-1">Ana Lizárraga</h3>
-                    <p class="text-sm text-gray-500 mb-5 flex items-start leading-snug">
-                        <i class="fa-solid fa-location-dot mt-0.5 mr-2 text-gray-400"></i>
-                        Av. Sábalo Cerritos, cerca de Torres Mazatlán.
-                    </p>
-                    <div class="flex gap-3 pt-4 border-t border-gray-50">
-                        <button class="bg-gray-50 text-gray-600 h-12 w-12 rounded-2xl flex-shrink-0 font-semibold hover:bg-gray-100 transition flex justify-center items-center shadow-sm"><i class="fa-solid fa-phone text-lg"></i></button>
-                        <a href="repartidor.html" class="bg-[#6b9e1a] text-white h-12 rounded-2xl flex-1 font-bold shadow-lg shadow-[#6b9e1a]/30 transition-all active:scale-[0.98] flex justify-center items-center gap-2 hover:bg-[#5a8516]">
-                            Ir al Mapa <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-gray-400">#1025</span>
-                        <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full shadow-sm"><i class="fa-solid fa-box text-[10px] mr-1"></i> Asignado</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-1">Roberto Gómez</h3>
-                    <p class="text-sm text-gray-500 mb-5 flex items-start leading-snug"><i class="fa-solid fa-location-dot mt-0.5 mr-2 text-gray-400"></i>Juan Carrasco 89, Centro.</p>
-                    <div class="flex gap-3 pt-4 border-t border-gray-50">
-                        <button class="bg-gray-50 text-gray-600 h-12 w-12 rounded-2xl flex-shrink-0 font-semibold hover:bg-gray-100 transition flex justify-center items-center shadow-sm"><i class="fa-solid fa-phone text-lg"></i></button>
-                        <a href="repartidor.html" class="bg-[#001b71] text-white h-12 rounded-2xl flex-1 font-bold shadow-lg shadow-[#001b71]/30 transition-all active:scale-[0.98] flex justify-center items-center gap-2 hover:bg-[#001250]">
-                            Iniciar Entrega <i class="fa-solid fa-play"></i>
-                        </a>
-                    </div>
-                </div>
+                <!-- Rutas activas cargadas por JS -->
             </div>
 
             <div id="lista-historial" class="space-y-4 mb-8 hidden animate-[fadeIn_0.3s_ease-in-out]">
-                
-                <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 relative overflow-hidden opacity-80">
-                    <div class="absolute top-0 left-0 w-1.5 h-full bg-[#6b9e1a]"></div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-gray-400">#1021</span>
-                        <span class="bg-[#6b9e1a]/10 text-[#6b9e1a] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-check-circle text-[10px]"></i> Entregado</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-1 line-through decoration-gray-300">María López</h3>
-                    <p class="text-sm text-gray-500 mb-4 flex items-start leading-snug"><i class="fa-solid fa-location-dot mt-0.5 mr-2 text-gray-400"></i>Paseo Olas Altas 45.</p>
-                    <div class="flex justify-between items-center pt-3 border-t border-gray-50 text-sm">
-                        <span class="text-gray-500 font-medium"><i class="fa-regular fa-clock mr-1"></i> 11:45 AM</span>
-                        <button class="text-[#001b71] font-bold hover:underline">Detalles</button>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-3xl p-5 shadow-sm border border-red-100 relative overflow-hidden bg-red-50/40 opacity-90">
-                    <div class="absolute top-0 left-0 w-1.5 h-full bg-red-500"></div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-gray-400">#1022</span>
-                        <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-[10px]"></i> Fallido</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-1">Empresa XYZ</h3>
-                    <div class="bg-red-100/50 p-2 rounded-lg mb-3 mt-2 text-xs font-semibold text-red-800 border border-red-100"><i class="fa-solid fa-circle-xmark mr-1"></i> Local cerrado.</div>
-                    <div class="flex justify-between items-center pt-3 border-t border-red-100/50 text-sm">
-                        <span class="text-red-500 font-medium"><i class="fa-regular fa-clock mr-1"></i> 12:10 PM</span>
-                        <button class="text-red-600 font-bold hover:underline">Detalles</button>
-                    </div>
-                </div>
+                <!-- Historial de rutas cargadas por JS -->
             </div>
 
         </div>
@@ -134,6 +72,137 @@
     </div>
 
     <script>
+        // ==========================================
+        // VERIFICACIÓN DE SESIÓN Y CARGA DE DATOS
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Validar que exista la sesión
+            const usuarioStr = localStorage.getItem('usuarioPassa');
+            if (!usuarioStr) {
+                // Si no hay sesión iniciada, lo devolvemos al login
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // 2. Extraer datos del usuario y pintar el saludo
+            const usuario = JSON.parse(usuarioStr);
+            const primerNombre = usuario.nombre.split(' ')[0]; // Para que diga "Hola, Carlos" en vez de nombre completo
+            
+            document.getElementById('saludo-repartidor').innerHTML = `Hola, ${primerNombre} 👋`;
+            
+            // Semilla para el avatar único
+            const seed = encodeURIComponent(usuario.nombre.replace(/\s+/g, ''));
+            document.getElementById('avatar-repartidor').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=e2e8f0`;
+            
+            // 3. Consultar a la base de datos sus pedidos
+            await cargarPedidos(usuario.id_usuario);
+        });
+
+        async function cargarPedidos(id_repartidor) {
+            try {
+                const response = await fetch(`obtener_pedidos_repartidor.php?repartidor_id=${id_repartidor}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Actualizar contadores
+                    document.getElementById('contador-pendientes').innerText = data.activas.length;
+                    document.getElementById('contador-entregados').innerText = data.historial.filter(p => p.estado === 'entregado').length;
+                    
+                    renderizarActivas(data.activas);
+                    renderizarHistorial(data.historial);
+                }
+            } catch (error) {
+                console.error('Error cargando pedidos:', error);
+            }
+        }
+
+        function renderizarActivas(pedidos) {
+            const contenedor = document.getElementById('lista-activas');
+            contenedor.innerHTML = '';
+            
+            if(pedidos.length === 0) {
+                contenedor.innerHTML = `<div class="text-center p-8 bg-white border border-gray-100 rounded-3xl"><i class="fa-solid fa-mug-hot text-4xl text-gray-300 mb-3"></i><p class="text-gray-500 font-medium text-sm">No tienes rutas pendientes. ¡Buen trabajo!</p></div>`;
+                return;
+            }
+
+            pedidos.forEach(p => {
+                const isEnCamino = p.estado === 'en_camino';
+                const badge = isEnCamino 
+                    ? `<span class="bg-[#ffcc00]/20 text-[#997a00] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm"><i class="fa-solid fa-motorcycle text-[10px] fa-fade"></i> En camino</span>`
+                    : `<span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full shadow-sm"><i class="fa-solid fa-box text-[10px] mr-1"></i> ${p.estado.charAt(0).toUpperCase() + p.estado.slice(1)}</span>`;
+                
+                const colorBarra = isEnCamino ? 'bg-[#ffcc00]' : 'bg-gray-300';
+                
+                const btnClases = isEnCamino 
+                    ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/30' 
+                    : 'bg-[#001b71] hover:bg-[#001250] shadow-[#001b71]/30';
+                
+                const btnTexto = isEnCamino 
+                    ? `Continuar Ruta <i class="fa-solid fa-location-crosshairs"></i>`
+                    : `Iniciar Ruta <i class="fa-solid fa-play"></i>`;
+
+                // En el href podemos enviar el id del pedido para que la vista del mapa sepa a dónde ir
+                contenedor.innerHTML += `
+                    <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 relative overflow-hidden transition-all hover:shadow-md">
+                        <div class="absolute top-0 left-0 w-1.5 h-full ${colorBarra}"></div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm font-bold text-gray-400">#${p.id_pedido}</span>
+                            ${badge}
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">${p.cliente}</h3>
+                        <p class="text-sm text-gray-500 mb-5 flex items-start leading-snug">
+                            <i class="fa-solid fa-location-dot mt-0.5 mr-2 text-gray-400"></i>
+                            <span class="truncate-2-lines">${p.direccion_entrega}</span>
+                        </p>
+                        <div class="flex gap-3 pt-4 border-t border-gray-50">
+                            <a href="repartidor.html?id_pedido=${p.id_pedido}" class="text-white h-12 rounded-2xl flex-1 font-bold shadow-lg transition-all active:scale-[0.98] flex justify-center items-center gap-2 ${btnClases}">
+                                ${btnTexto}
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderizarHistorial(pedidos) {
+            const contenedor = document.getElementById('lista-historial');
+            contenedor.innerHTML = '';
+            
+            if(pedidos.length === 0) {
+                contenedor.innerHTML = `<div class="text-center p-8 bg-white border border-gray-100 rounded-3xl"><p class="text-gray-500 font-medium text-sm">Aún no hay entregas finalizadas hoy.</p></div>`;
+                return;
+            }
+
+            pedidos.forEach(p => {
+                const isEntregado = p.estado === 'entregado';
+                const badge = isEntregado 
+                    ? `<span class="bg-[#6b9e1a]/10 text-[#6b9e1a] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-check-circle text-[10px]"></i> Entregado</span>`
+                    : `<span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-[10px]"></i> ${p.estado}</span>`;
+                
+                const bgCard = isEntregado ? 'bg-white opacity-80' : 'bg-red-50/40 opacity-90 border-red-100';
+                const borderColor = isEntregado ? 'bg-[#6b9e1a]' : 'bg-red-500';
+
+                contenedor.innerHTML += `
+                    <div class="${bgCard} rounded-3xl p-5 shadow-sm border border-gray-100 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1.5 h-full ${borderColor}"></div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm font-bold text-gray-400">#${p.id_pedido}</span>
+                            ${badge}
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-1 ${isEntregado ? 'line-through decoration-gray-300' : ''}">${p.cliente}</h3>
+                        <p class="text-sm text-gray-500 mb-4 flex items-start leading-snug"><i class="fa-solid fa-location-dot mt-0.5 mr-2 text-gray-400"></i>${p.direccion_entrega}</p>
+                        ${!isEntregado && p.motivo_excepcion ? `<div class="bg-red-100/50 p-2 rounded-lg mb-3 mt-2 text-xs font-semibold text-red-800 border border-red-100"><i class="fa-solid fa-circle-xmark mr-1"></i> ${p.motivo_excepcion}</div>` : ''}
+                        <div class="flex justify-between items-center pt-3 border-t ${isEntregado ? 'border-gray-50' : 'border-red-100/50'} text-sm">
+                            <span class="${isEntregado ? 'text-gray-500' : 'text-red-500'} font-medium"><i class="fa-regular fa-clock mr-1"></i> ${p.hora_actualizacion}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // ==========================================
+        // LÓGICA DE PESTAÑAS
+        // ==========================================
         function cambiarPestana(pestana) {
             const listaActivas = document.getElementById('lista-activas');
             const listaHistorial = document.getElementById('lista-historial');

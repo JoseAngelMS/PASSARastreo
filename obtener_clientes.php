@@ -14,7 +14,7 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $pdo->query("SELECT id_cliente, nombre FROM clientes ORDER BY nombre ASC");
+    $stmt = $pdo->query("SELECT id_cliente, nombre, telefono, email, direccion_principal FROM clientes ORDER BY nombre ASC");
     $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
